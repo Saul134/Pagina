@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>San Valentín - Hello Kitty & Kuromi</title>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Comic Sans MS', cursive, sans-serif; }
+
+    body {
+      background: linear-gradient(135deg, #ffd6e7, #cba6ff);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Pantalla de apertura */
+    .intro {
+      position: fixed; inset: 0;
+      background: radial-gradient(circle, #ffb6d9, #b084ff);
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      z-index: 10;
+      animation: fadeOut 2s ease forwards;
+      animation-delay: 2.5s;
+    }
+
+    .intro h1 { color: white; font-size: 32px; animation: zoom 2s ease; text-align: center; padding: 0 20px; }
+
+    @keyframes zoom { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+
+    /* Tarjeta */
+    .card, .flowers-page {
+      background: white; border-radius: 25px; padding: 40px 30px; text-align: center; width: 340px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15); position: relative; overflow: hidden;
+      transform: scale(0.8); opacity: 0; animation: appear 1.5s ease forwards; animation-delay: 2.5s;
+    }
+
+    .flowers-page { display: none; }
+
+    @keyframes appear { to { transform: scale(1); opacity: 1; } }
+
+    h2 { color: #ff4fa3; font-size: 26px; margin-bottom: 10px; }
+    p { color: #555; font-size: 16px; margin-bottom: 20px; }
+
+    .characters { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
+
+    .kitty { width: 110px; animation: float 3s ease-in-out infinite; }
+    .flowers { width: 180px; margin: 15px auto; animation: float 4s ease-in-out infinite; }
+
+    @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
+
+    button {
+      background: linear-gradient(45deg, #ff4fa3, #9b59ff);
+      color: white; border: none; padding: 12px 22px; border-radius: 20px; font-size: 16px;
+      cursor: pointer; transition: 0.3s ease; margin-top: 10px;
+    }
+
+    button:hover { transform: scale(1.08); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+
+    .message { margin-top: 15px; color: #9b59ff; font-weight: bold; display: none; animation: fadeIn 1s ease forwards; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Corazones */
+    .heart { position: fixed; bottom: -20px; font-size: 22px; animation: rise 6s linear forwards; pointer-events: none; }
+    @keyframes rise { to { transform: translateY(-110vh) scale(1.5); opacity: 0; } }
+  </style>
+</head>
+
+<body>
+  <!-- Intro animada -->
+  <div class="intro">
+    <h1>💖 Una sorpresa para ti 💖</h1>
+  </div>
+
+  <!-- Página 1 -->
+  <div class="card" id="page1">
+    <h2>Feliz San Valentín, Yaretzy 💕</h2>
+
+    <div class="characters">
+      <img class="kitty" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTesBcg0qCUF_Iv3cP0zsQBk6oreWK4xrIDmw&s" alt="Hello Kitty" />
+      <img class="kitty" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWr3Sep8jaEUmYesqcLq27W8aJB4ydMDpF7Q&s" alt="Kuromi" />
+    </div>
+
+    <p>Eres la persona más especial del mundo 🥰</p>
+
+    <button onclick="mostrarMensaje()">Abrir y leer 💌</button>
+
+    <div class="message" id="msg"> Sabes que eres alguien realmente especial para mí y que siempre estare para ti sin importar la circunstancia ni el momento eres y siempre seras lo mejor que me a pasado y sorry por ser asi tkm , (si quieres saber porque la hice preguntame jsjs) 💗💜</div>
+
+    <button onclick="irFlores()">Ver tu ramo de flores 🌸</button>  
+  </div>
+
+  <!-- Página 2: flores -->
+  <div class="flowers-page" id="page2">
+    <h2>Un ramo para ti, Yaretzy 🌷</h2>
+
+    <img class="flowers" src="https://i.pinimg.com/736x/60/0b/8f/600b8f553c725faa2ce85224901fc32b.jpg" alt="Ramo de flores" />
+
+    <p>Porque mereces todas las flores bonitas del mundo 💐</p>
+
+    <button onclick="volver()">Regresar 💕</button>
+  </div>
+
+  <script>
+    function mostrarMensaje() {
+      const msg = document.getElementById('msg');
+      msg.style.display = 'block';
+      lanzarCorazones();
+    }
+
+    function lanzarCorazones() {
+      for (let i = 0; i < 25; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = Math.random() > 0.5 ? '💗' : '💜';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = 4 + Math.random() * 3 + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 7000);
+      }
+    }
+
+    function irFlores() {
+      document.getElementById('page1').style.display = 'none';
+      document.getElementById('page2').style.display = 'block';
+    }
+
+    function volver() {
+      document.getElementById('page2').style.display = 'none';
+      document.getElementById('page1').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
